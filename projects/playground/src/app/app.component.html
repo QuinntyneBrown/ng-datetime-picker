@@ -9,4 +9,16 @@
   <p class="output">
     Selected: <strong>{{ selectedDate ?? 'None' }}</strong>
   </p>
+
+  <h2>Compact Variant</h2>
+
+  <qb-datetime-picker
+    [value]="compactDate"
+    [compact]="true"
+    (valueChange)="onCompactDateTimeChange($event)"
+  ></qb-datetime-picker>
+
+  <p class="compact-output">
+    Selected: <strong>{{ compactDate ?? 'None' }}</strong>
+  </p>
 </div>

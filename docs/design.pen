@@ -1,0 +1,594 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "RRGCk",
+      "x": 0,
+      "y": 0,
+      "name": "DateTime Picker",
+      "width": 820,
+      "fill": "#FFFFFF",
+      "cornerRadius": 16,
+      "stroke": {
+        "thickness": 1.5,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        40,
+        48
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "KO3hd",
+          "name": "Title",
+          "fill": "#18181B",
+          "content": "DateTime Picker",
+          "fontFamily": "Inter",
+          "fontSize": 28,
+          "fontWeight": "600",
+          "letterSpacing": -0.5
+        },
+        {
+          "type": "text",
+          "id": "IgQ5N",
+          "name": "Subtitle",
+          "fill": "#71717A",
+          "content": "Select date and time with millisecond precision",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "3ShfI",
+          "name": "Fields Row",
+          "width": "fill_container",
+          "gap": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "qXeHy",
+              "type": "ref",
+              "ref": "bKYIQ",
+              "name": "Date Field",
+              "width": "fill_container"
+            },
+            {
+              "id": "s577t",
+              "type": "ref",
+              "ref": "NJWau",
+              "name": "Hour Field",
+              "width": "fill_container",
+              "descendants": {
+                "rUV8F": {
+                  "content": "Hour"
+                },
+                "AGcBr": {
+                  "content": "14"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "dQ9ac",
+              "name": "Sep1",
+              "fill": "#A1A1AA",
+              "content": ":",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "id": "mihu6",
+              "type": "ref",
+              "ref": "NJWau",
+              "name": "Minute Field",
+              "width": "fill_container",
+              "descendants": {
+                "rUV8F": {
+                  "content": "Minute"
+                },
+                "AGcBr": {
+                  "content": "30"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "vPTN0",
+              "name": "Sep2",
+              "fill": "#A1A1AA",
+              "content": ":",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "id": "8zWp8",
+              "type": "ref",
+              "ref": "NJWau",
+              "name": "Second Field",
+              "width": "fill_container",
+              "descendants": {
+                "rUV8F": {
+                  "content": "Second"
+                },
+                "AGcBr": {
+                  "content": "45"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "aBrb6",
+              "name": "Sep3",
+              "fill": "#A1A1AA",
+              "content": ".",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "600"
+            },
+            {
+              "id": "Z9RLG",
+              "type": "ref",
+              "ref": "NJWau",
+              "name": "Millisecond Field",
+              "width": "fill_container",
+              "descendants": {
+                "rUV8F": {
+                  "content": "Millisecond"
+                },
+                "AGcBr": {
+                  "content": "123"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "2a3LZ",
+          "name": "Divider",
+          "fill": "#E4E4E7",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "Cub7z",
+          "name": "Output Row",
+          "width": "fill_container",
+          "gap": 8,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "cyQat",
+              "name": "Selected Label",
+              "fill": "#71717A",
+              "content": "Selected:",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "NmyCZ",
+              "name": "Selected Value",
+              "fill": "#2563EB",
+              "content": "2024-01-15T14:30:45.123Z",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "600"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "NJWau",
+      "x": 900,
+      "y": 0,
+      "name": "OutlineInput",
+      "reusable": true,
+      "width": 140,
+      "fill": "#FFFFFF",
+      "cornerRadius": 4,
+      "stroke": {
+        "thickness": 1.5,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 2,
+      "padding": [
+        8,
+        12
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "rUV8F",
+          "name": "Label",
+          "fill": "#71717A",
+          "content": "Label",
+          "fontFamily": "Inter",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "letterSpacing": 0.5
+        },
+        {
+          "type": "text",
+          "id": "AGcBr",
+          "name": "Value",
+          "fill": "#18181B",
+          "content": "0",
+          "fontFamily": "Inter",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "bKYIQ",
+      "x": 900,
+      "y": 100,
+      "name": "DateInput",
+      "reusable": true,
+      "width": 200,
+      "fill": "#FFFFFF",
+      "cornerRadius": 4,
+      "stroke": {
+        "thickness": 1.5,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 2,
+      "padding": [
+        8,
+        12
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "U1ixL",
+          "name": "Label",
+          "fill": "#71717A",
+          "content": "Date",
+          "fontFamily": "Inter",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "letterSpacing": 0.5
+        },
+        {
+          "type": "frame",
+          "id": "66Ifp",
+          "name": "ValueRow",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "61YBe",
+              "name": "Value",
+              "fill": "#18181B",
+              "content": "01/15/2024",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "icon_font",
+              "id": "7snJj",
+              "name": "CalendarIcon",
+              "width": 20,
+              "height": 20,
+              "iconFontName": "calendar",
+              "iconFontFamily": "lucide",
+              "fill": "#71717A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "tNhTh",
+      "x": 900,
+      "y": 220,
+      "name": "CompactInput",
+      "reusable": true,
+      "width": 90,
+      "fill": "#FFFFFF",
+      "cornerRadius": 3,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 1,
+      "padding": [
+        4,
+        8
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "ZmCQ8",
+          "name": "Label",
+          "fill": "#A1A1AA",
+          "content": "Label",
+          "fontFamily": "Inter",
+          "fontSize": 10,
+          "fontWeight": "500",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "text",
+          "id": "xe2XR",
+          "name": "Value",
+          "fill": "#18181B",
+          "content": "0",
+          "fontFamily": "Inter",
+          "fontSize": 13
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "usm5G",
+      "x": 900,
+      "y": 300,
+      "name": "CompactDateInput",
+      "reusable": true,
+      "width": 130,
+      "fill": "#FFFFFF",
+      "cornerRadius": 3,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 1,
+      "padding": [
+        4,
+        8
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "p0M4E",
+          "name": "Label",
+          "fill": "#A1A1AA",
+          "content": "Date",
+          "fontFamily": "Inter",
+          "fontSize": 10,
+          "fontWeight": "500",
+          "letterSpacing": 0.3
+        },
+        {
+          "type": "frame",
+          "id": "bgDnN",
+          "name": "ValueRow",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "HqXhU",
+              "name": "Value",
+              "fill": "#18181B",
+              "content": "01/15/2024",
+              "fontFamily": "Inter",
+              "fontSize": 13
+            },
+            {
+              "type": "icon_font",
+              "id": "Ob5oO",
+              "name": "CalendarIcon",
+              "width": 14,
+              "height": 14,
+              "iconFontName": "calendar",
+              "iconFontFamily": "lucide",
+              "fill": "#A1A1AA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "lT5ue",
+      "x": 0,
+      "y": 390,
+      "name": "DateTime Picker — Compact",
+      "width": 580,
+      "fill": "#FFFFFF",
+      "cornerRadius": 12,
+      "stroke": {
+        "thickness": 1,
+        "fill": "#E4E4E7"
+      },
+      "layout": "vertical",
+      "gap": 16,
+      "padding": [
+        20,
+        24
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "sNcaf",
+          "name": "Title",
+          "fill": "#18181B",
+          "content": "DateTime Picker — Compact",
+          "fontFamily": "Inter",
+          "fontSize": 18,
+          "fontWeight": "600",
+          "letterSpacing": -0.3
+        },
+        {
+          "type": "text",
+          "id": "4LmiP",
+          "name": "Subtitle",
+          "fill": "#A1A1AA",
+          "content": "Optimized for dense dashboard layouts",
+          "fontFamily": "Inter",
+          "fontSize": 11
+        },
+        {
+          "type": "frame",
+          "id": "jtBgJ",
+          "name": "Fields Row",
+          "width": "fill_container",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "fEEAq",
+              "type": "ref",
+              "ref": "usm5G",
+              "name": "Date Field",
+              "width": "fill_container"
+            },
+            {
+              "id": "qfcCc",
+              "type": "ref",
+              "ref": "tNhTh",
+              "name": "Hour Field",
+              "width": "fill_container",
+              "descendants": {
+                "ZmCQ8": {
+                  "content": "Hour"
+                },
+                "xe2XR": {
+                  "content": "14"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "cuMzM",
+              "name": "Sep1",
+              "fill": "#D4D4D8",
+              "content": ":",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "600"
+            },
+            {
+              "id": "uX6jT",
+              "type": "ref",
+              "ref": "tNhTh",
+              "name": "Minute Field",
+              "width": "fill_container",
+              "descendants": {
+                "ZmCQ8": {
+                  "content": "Minute"
+                },
+                "xe2XR": {
+                  "content": "30"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "4n7Q5",
+              "name": "Sep2",
+              "fill": "#D4D4D8",
+              "content": ":",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "600"
+            },
+            {
+              "id": "UREnm",
+              "type": "ref",
+              "ref": "tNhTh",
+              "name": "Second Field",
+              "width": "fill_container",
+              "descendants": {
+                "ZmCQ8": {
+                  "content": "Second"
+                },
+                "xe2XR": {
+                  "content": "45"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "Qqi8X",
+              "name": "Sep3",
+              "fill": "#D4D4D8",
+              "content": ".",
+              "fontFamily": "Inter",
+              "fontSize": 16,
+              "fontWeight": "600"
+            },
+            {
+              "id": "Fx57X",
+              "type": "ref",
+              "ref": "tNhTh",
+              "name": "Millisecond Field",
+              "width": "fill_container",
+              "descendants": {
+                "ZmCQ8": {
+                  "content": "ms"
+                },
+                "xe2XR": {
+                  "content": "123"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "SU2WG",
+          "name": "Divider",
+          "fill": "#E4E4E7",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "1tHlk",
+          "name": "Output Row",
+          "width": "fill_container",
+          "gap": 6,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "7UaC2",
+              "name": "Selected Label",
+              "fill": "#A1A1AA",
+              "content": "Selected:",
+              "fontFamily": "Inter",
+              "fontSize": 12,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Op0DL",
+              "name": "Selected Value",
+              "fill": "#2563EB",
+              "content": "2024-01-15T14:30:45.123Z",
+              "fontFamily": "Inter",
+              "fontSize": 12,
+              "fontWeight": "600"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

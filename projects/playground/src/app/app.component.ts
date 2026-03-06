@@ -10,8 +10,13 @@ import { NgDatetimePicker } from 'ng-datetime-picker';
 })
 export class AppComponent {
   selectedDate: string | null = new Date().toISOString();
+  compactDate: string | null = new Date().toISOString();
 
   onDateTimeChange(date: string | null) {
     this.selectedDate = date;
+  }
+
+  onCompactDateTimeChange(date: string | null) {
+    this.compactDate = date;
   }
 }

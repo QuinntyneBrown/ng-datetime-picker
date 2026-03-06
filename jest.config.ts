@@ -12,7 +12,7 @@ const config: Config = {
       },
     ],
   },
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/', '<rootDir>/projects/playground/'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/', '<rootDir>/projects/playground/', '<rootDir>/e2e/'],
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   collectCoverageFrom: [
     'projects/ng-datetime-picker/src/**/*.ts',

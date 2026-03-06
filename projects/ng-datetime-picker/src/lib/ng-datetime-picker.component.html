@@ -1,4 +1,4 @@
-<div class="qb-datetime-picker">
+<div class="qb-datetime-picker" [ngClass]="{'qb-datetime-picker--compact': compact}">
   <mat-form-field appearance="outline">
     <mat-label>Date</mat-label>
     <input matInput [matDatepicker]="picker" [ngModel]="date" (dateChange)="onDateChange($event)" />
@@ -19,5 +19,10 @@
   <mat-form-field appearance="outline">
     <mat-label>Second</mat-label>
     <input matInput type="number" [ngModel]="second" (ngModelChange)="onSecondChange($event)" min="0" max="59" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Millisecond</mat-label>
+    <input matInput type="number" [ngModel]="millisecond" (ngModelChange)="onMillisecondChange($event)" min="0" max="999" />
   </mat-form-field>
 </div>

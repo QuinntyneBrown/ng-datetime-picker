@@ -3,3 +3,32 @@
   gap: 8px;
   align-items: baseline;
 }
+
+.qb-datetime-picker--compact {
+  gap: 4px;
+}
+
+.qb-datetime-picker--compact .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.qb-datetime-picker--compact .mat-mdc-form-field-infix {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  min-height: unset !important;
+}
+
+.qb-datetime-picker--compact .mat-mdc-form-field-flex {
+  align-items: center !important;
+}
+
+.qb-datetime-picker--compact .mat-datepicker-toggle button.mat-mdc-icon-button {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 4px !important;
+}
+
+.qb-datetime-picker--compact .mat-datepicker-toggle svg {
+  width: 18px !important;
+  height: 18px !important;
+}

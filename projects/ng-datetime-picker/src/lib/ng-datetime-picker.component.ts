@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -19,15 +19,18 @@ import { MatNativeDateModule } from '@angular/material/core';
   ],
   templateUrl: './ng-datetime-picker.component.html',
   styleUrl: './ng-datetime-picker.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class NgDatetimePicker implements OnChanges {
   @Input() value: string | null = null;
+  @Input() compact: boolean = false;
   @Output() valueChange = new EventEmitter<string | null>();
 
   date: Date | null = null;
   hour: number = 0;
   minute: number = 0;
   second: number = 0;
+  millisecond: number = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['value']) {
@@ -55,6 +58,11 @@ export class NgDatetimePicker implements OnChanges {
     this.emitCombined();
   }
 
+  onMillisecondChange(val: number): void {
+    this.millisecond = this.clamp(val, 0, 999);
+    this.emitCombined();
+  }
+
   private syncFromValue(val: string | null): void {
     if (val) {
       const d = new Date(val);
@@ -62,11 +70,13 @@ export class NgDatetimePicker implements OnChanges {
       this.hour = d.getHours();
       this.minute = d.getMinutes();
       this.second = d.getSeconds();
+      this.millisecond = d.getMilliseconds();
     } else {
       this.date = null;
       this.hour = 0;
       this.minute = 0;
       this.second = 0;
+      this.millisecond = 0;
     }
   }
 
@@ -79,6 +89,7 @@ export class NgDatetimePicker implements OnChanges {
         this.hour,
         this.minute,
         this.second,
+        this.millisecond,
       );
       this.valueChange.emit(combined.toISOString());
     } else {

@@ -31,6 +31,7 @@ describe('NgDatetimePicker', () => {
     expect(component.hour).toBe(0);
     expect(component.minute).toBe(0);
     expect(component.second).toBe(0);
+    expect(component.millisecond).toBe(0);
   });
 
   describe('ngOnChanges', () => {
@@ -79,6 +80,48 @@ describe('NgDatetimePicker', () => {
       expect(component.hour).toBe(0);
       expect(component.minute).toBe(0);
       expect(component.second).toBe(0);
+    });
+
+    it('should populate millisecond field from a value with milliseconds', () => {
+      const testDate = new Date(2024, 5, 15, 14, 30, 45, 123);
+      const testIso = testDate.toISOString();
+      component.value = testIso;
+      component.ngOnChanges({
+        value: {
+          currentValue: testIso,
+          previousValue: null,
+          firstChange: true,
+          isFirstChange: () => true,
+        },
+      });
+
+      expect(component.millisecond).toBe(123);
+    });
+
+    it('should reset millisecond to 0 when value is set to null', () => {
+      const testDate = new Date(2024, 5, 15, 14, 30, 45, 500);
+      const testIso = testDate.toISOString();
+      component.value = testIso;
+      component.ngOnChanges({
+        value: {
+          currentValue: testIso,
+          previousValue: null,
+          firstChange: true,
+          isFirstChange: () => true,
+        },
+      });
+
+      component.value = null;
+      component.ngOnChanges({
+        value: {
+          currentValue: null,
+          previousValue: testIso,
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      });
+
+      expect(component.millisecond).toBe(0);
     });
 
     it('should not sync when a different input changes', () => {
@@ -187,6 +230,40 @@ describe('NgDatetimePicker', () => {
     });
   });
 
+  describe('onMillisecondChange', () => {
+    it('should update millisecond and emit combined datetime with milliseconds', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit');
+      component.date = new Date(2024, 11, 25);
+      component.hour = 8;
+      component.minute = 30;
+      component.second = 45;
+
+      component.onMillisecondChange(123);
+
+      expect(component.millisecond).toBe(123);
+      expect(spy).toHaveBeenCalledWith(new Date(2024, 11, 25, 8, 30, 45, 123).toISOString());
+    });
+
+    it('should clamp millisecond to max 999', () => {
+      component.date = new Date(2024, 0, 1);
+      component.onMillisecondChange(1500);
+      expect(component.millisecond).toBe(999);
+    });
+
+    it('should clamp millisecond to min 0', () => {
+      component.date = new Date(2024, 0, 1);
+      component.onMillisecondChange(-10);
+      expect(component.millisecond).toBe(0);
+    });
+
+    it('should emit null when no date is set', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit');
+      component.date = null;
+      component.onMillisecondChange(500);
+      expect(spy).toHaveBeenCalledWith(null);
+    });
+  });
+
   describe('onSecondChange', () => {
     it('should update second and emit combined datetime', () => {
       const spy = jest.spyOn(component.valueChange, 'emit');
@@ -227,14 +304,28 @@ describe('NgDatetimePicker', () => {
       component.hour = 14;
       component.minute = 30;
       component.second = 0;
-      component.onSecondChange(0);
+      component.millisecond = 0;
+      component.onMillisecondChange(0);
 
       const emitted = spy.mock.calls[0][0] as string;
       expect(emitted).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
     });
 
+    it('should include milliseconds in the ISO output', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit');
+      component.date = new Date(2024, 0, 15);
+      component.hour = 14;
+      component.minute = 30;
+      component.second = 0;
+      component.onMillisecondChange(456);
+
+      const emitted = spy.mock.calls[0][0] as string;
+      const parsed = new Date(emitted);
+      expect(parsed.getMilliseconds()).toBe(456);
+    });
+
     it('should correctly parse an ISO string input and populate date/time fields', () => {
-      const iso = '2024-07-20T10:25:45.000Z';
+      const iso = '2024-07-20T10:25:45.123Z';
       component.value = iso;
       component.ngOnChanges({
         value: {
@@ -250,6 +341,7 @@ describe('NgDatetimePicker', () => {
       expect(component.hour).toBe(parsed.getHours());
       expect(component.minute).toBe(parsed.getMinutes());
       expect(component.second).toBe(parsed.getSeconds());
+      expect(component.millisecond).toBe(parsed.getMilliseconds());
     });
 
     it('should emit null when value is null', () => {
@@ -257,6 +349,26 @@ describe('NgDatetimePicker', () => {
       component.date = null;
       component.onHourChange(5);
       expect(spy).toHaveBeenCalledWith(null);
+    });
+  });
+
+  describe('compact mode', () => {
+    it('should default compact to false', () => {
+      expect(component.compact).toBe(false);
+    });
+
+    it('should add qb-datetime-picker--compact class when compact is true', () => {
+      component.compact = true;
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelector('.qb-datetime-picker--compact')).toBeTruthy();
+    });
+
+    it('should not have qb-datetime-picker--compact class when compact is false', () => {
+      component.compact = false;
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelector('.qb-datetime-picker--compact')).toBeFalsy();
     });
   });
 
@@ -270,7 +382,7 @@ describe('NgDatetimePicker', () => {
     it('should render hour input', () => {
       const el = fixture.nativeElement as HTMLElement;
       const inputs = el.querySelectorAll('input[type="number"]');
-      expect(inputs.length).toBe(3);
+      expect(inputs.length).toBe(4);
     });
 
     it('should render mat-datepicker-toggle', () => {
@@ -281,7 +393,7 @@ describe('NgDatetimePicker', () => {
     it('should render all form fields with outline appearance', () => {
       const el = fixture.nativeElement as HTMLElement;
       const formFields = el.querySelectorAll('mat-form-field');
-      expect(formFields.length).toBe(4);
+      expect(formFields.length).toBe(5);
       formFields.forEach((field) => {
         expect(field.classList.contains('mat-form-field-appearance-outline')).toBe(true);
       });
