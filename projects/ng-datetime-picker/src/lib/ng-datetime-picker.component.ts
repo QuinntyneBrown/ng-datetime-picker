@@ -17,33 +17,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatNativeDateModule,
   ],
-  template: `
-    <div class="qb-datetime-picker">
-      <mat-form-field>
-        <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="picker" [ngModel]="date" (dateChange)="onDateChange($event)" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Hour</mat-label>
-        <input matInput type="number" [ngModel]="hour" (ngModelChange)="onHourChange($event)" min="0" max="23" />
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>Minute</mat-label>
-        <input matInput type="number" [ngModel]="minute" (ngModelChange)="onMinuteChange($event)" min="0" max="59" />
-      </mat-form-field>
-    </div>
-  `,
-  styles: `
-    .qb-datetime-picker {
-      display: flex;
-      gap: 8px;
-      align-items: baseline;
-    }
-  `,
+  templateUrl: './ng-datetime-picker.component.html',
+  styleUrl: './ng-datetime-picker.component.css',
 })
 export class NgDatetimePicker implements OnChanges {
   @Input() value: Date | null = null;
@@ -52,6 +27,7 @@ export class NgDatetimePicker implements OnChanges {
   date: Date | null = null;
   hour: number = 0;
   minute: number = 0;
+  second: number = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['value']) {
@@ -74,15 +50,22 @@ export class NgDatetimePicker implements OnChanges {
     this.emitCombined();
   }
 
+  onSecondChange(val: number): void {
+    this.second = this.clamp(val, 0, 59);
+    this.emitCombined();
+  }
+
   private syncFromValue(val: Date | null): void {
     if (val) {
       this.date = new Date(val.getFullYear(), val.getMonth(), val.getDate());
       this.hour = val.getHours();
       this.minute = val.getMinutes();
+      this.second = val.getSeconds();
     } else {
       this.date = null;
       this.hour = 0;
       this.minute = 0;
+      this.second = 0;
     }
   }
 
@@ -94,6 +77,7 @@ export class NgDatetimePicker implements OnChanges {
         this.date.getDate(),
         this.hour,
         this.minute,
+        this.second,
       );
       this.valueChange.emit(combined);
     } else {

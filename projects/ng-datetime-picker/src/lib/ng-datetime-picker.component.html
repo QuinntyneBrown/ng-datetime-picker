@@ -1,0 +1,23 @@
+<div class="qb-datetime-picker">
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" [ngModel]="date" (dateChange)="onDateChange($event)" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Hour</mat-label>
+    <input matInput type="number" [ngModel]="hour" (ngModelChange)="onHourChange($event)" min="0" max="23" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Minute</mat-label>
+    <input matInput type="number" [ngModel]="minute" (ngModelChange)="onMinuteChange($event)" min="0" max="59" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Second</mat-label>
+    <input matInput type="number" [ngModel]="second" (ngModelChange)="onSecondChange($event)" min="0" max="59" />
+  </mat-form-field>
+</div>

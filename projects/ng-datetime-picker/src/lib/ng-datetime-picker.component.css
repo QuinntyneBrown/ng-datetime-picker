@@ -1,0 +1,5 @@
+.qb-datetime-picker {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
