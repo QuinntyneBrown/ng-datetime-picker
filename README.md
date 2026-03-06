@@ -1,59 +1,83 @@
-# NgDatetimePicker
+# ng-datetime-picker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+An Angular library providing a date and time picker component built with Angular Material.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Date selection via Angular Material datepicker
+- Hour and minute input fields with validation (0-23 hours, 0-59 minutes)
+- Two-way binding support via `value` input and `valueChange` output
+- Standalone component — no module import required
 
-```bash
-ng serve
-```
+## Requirements
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular ~17.2
+- Angular Material ~17.2
+- Angular CDK ~17.2
 
-## Code scaffolding
+## Installation
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Install the library and its peer dependencies:
 
 ```bash
-ng generate --help
+npm install ng-datetime-picker @angular/material @angular/cdk @angular/animations
 ```
 
-## Building
+## Usage
 
-To build the project run:
+```typescript
+import { NgDatetimePicker } from 'ng-datetime-picker';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [NgDatetimePicker],
+  template: `
+    <qb-datetime-picker [value]="myDate" (valueChange)="onDateChange($event)"></qb-datetime-picker>
+  `,
+})
+export class ExampleComponent {
+  myDate: Date | null = new Date();
+
+  onDateChange(date: Date | null) {
+    this.myDate = date;
+  }
+}
+```
+
+### API
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `value` | `Date \| null` | The current datetime value |
+| `valueChange` | `EventEmitter<Date \| null>` | Emitted when the user changes the date or time |
+
+## Development
+
+### Building
 
 ```bash
-ng build
+ng build ng-datetime-picker
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts are output to `dist/ng-datetime-picker`.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Running unit tests
 
 ```bash
-ng test
+npm test
 ```
 
-## Running end-to-end tests
+Tests use [Jest](https://jestjs.io/) with [jest-preset-angular](https://thymikee.github.io/jest-preset-angular/). Coverage is collected automatically.
 
-For end-to-end (e2e) testing, run:
+### Project structure
 
-```bash
-ng e2e
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+projects/ng-datetime-picker/
+  src/
+    lib/
+      ng-datetime-picker.ts        # Component implementation
+      ng-datetime-picker.spec.ts   # Unit tests
+    public-api.ts                   # Public API exports
+  package.json                      # Library package metadata
+```
