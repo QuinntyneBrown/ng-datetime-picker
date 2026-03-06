@@ -21,8 +21,8 @@ import { MatNativeDateModule } from '@angular/material/core';
   styleUrl: './ng-datetime-picker.component.css',
 })
 export class NgDatetimePicker implements OnChanges {
-  @Input() value: Date | null = null;
-  @Output() valueChange = new EventEmitter<Date | null>();
+  @Input() value: string | null = null;
+  @Output() valueChange = new EventEmitter<string | null>();
 
   date: Date | null = null;
   hour: number = 0;
@@ -55,12 +55,13 @@ export class NgDatetimePicker implements OnChanges {
     this.emitCombined();
   }
 
-  private syncFromValue(val: Date | null): void {
+  private syncFromValue(val: string | null): void {
     if (val) {
-      this.date = new Date(val.getFullYear(), val.getMonth(), val.getDate());
-      this.hour = val.getHours();
-      this.minute = val.getMinutes();
-      this.second = val.getSeconds();
+      const d = new Date(val);
+      this.date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      this.hour = d.getHours();
+      this.minute = d.getMinutes();
+      this.second = d.getSeconds();
     } else {
       this.date = null;
       this.hour = 0;
@@ -79,7 +80,7 @@ export class NgDatetimePicker implements OnChanges {
         this.minute,
         this.second,
       );
-      this.valueChange.emit(combined);
+      this.valueChange.emit(combined.toISOString());
     } else {
       this.valueChange.emit(null);
     }

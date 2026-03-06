@@ -5,8 +5,9 @@ An Angular library providing a date and time picker component built with Angular
 ## Features
 
 - Date selection via Angular Material datepicker
-- Hour and minute input fields with validation (0-23 hours, 0-59 minutes)
+- Hour, minute, and second input fields with validation (0-23 hours, 0-59 minutes, 0-59 seconds)
 - Two-way binding support via `value` input and `valueChange` output
+- Values exchanged as ISO 8601 strings
 - Standalone component — no module import required
 
 ## Requirements
@@ -37,9 +38,9 @@ import { NgDatetimePicker } from 'ng-datetime-picker';
   `,
 })
 export class ExampleComponent {
-  myDate: Date | null = new Date();
+  myDate: string | null = new Date().toISOString();
 
-  onDateChange(date: Date | null) {
+  onDateChange(date: string | null) {
     this.myDate = date;
   }
 }
@@ -49,8 +50,8 @@ export class ExampleComponent {
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `value` | `Date \| null` | The current datetime value |
-| `valueChange` | `EventEmitter<Date \| null>` | Emitted when the user changes the date or time |
+| `value` | `string \| null` | The current datetime value as an ISO 8601 string |
+| `valueChange` | `EventEmitter<string \| null>` | Emitted when the user changes the date or time |
 
 ## Development
 
@@ -70,14 +71,34 @@ npm test
 
 Tests use [Jest](https://jestjs.io/) with [jest-preset-angular](https://thymikee.github.io/jest-preset-angular/). Coverage is collected automatically.
 
+### Running e2e tests
+
+```bash
+npm run e2e
+```
+
+E2E tests use [Playwright](https://playwright.dev/). The script builds the library and runs Playwright against the playground app.
+
+### Playground
+
+```bash
+npm start
+```
+
+Serves the playground app at `http://localhost:4200` for manual testing.
+
 ### Project structure
 
 ```
 projects/ng-datetime-picker/
   src/
     lib/
-      ng-datetime-picker.ts        # Component implementation
-      ng-datetime-picker.spec.ts   # Unit tests
-    public-api.ts                   # Public API exports
-  package.json                      # Library package metadata
+      ng-datetime-picker.component.ts     # Component implementation
+      ng-datetime-picker.component.html    # Component template
+      ng-datetime-picker.component.spec.ts # Unit tests
+    public-api.ts                          # Public API exports
+  package.json                             # Library package metadata
+projects/playground/                       # Demo/playground app
+e2e/                                       # Playwright e2e tests
+playwright.config.ts                       # Playwright configuration
 ```

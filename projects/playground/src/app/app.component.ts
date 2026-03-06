@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NgDatetimePicker } from 'ng-datetime-picker';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [NgDatetimePicker],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'playground';
+  selectedDate: string | null = new Date().toISOString();
+
+  onDateTimeChange(date: string | null) {
+    this.selectedDate = date;
+  }
 }

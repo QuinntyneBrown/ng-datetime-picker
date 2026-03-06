@@ -36,10 +36,11 @@ describe('NgDatetimePicker', () => {
   describe('ngOnChanges', () => {
     it('should sync date and time from a non-null value input', () => {
       const testDate = new Date(2024, 5, 15, 14, 30, 45);
-      component.value = testDate;
+      const testIso = testDate.toISOString();
+      component.value = testIso;
       component.ngOnChanges({
         value: {
-          currentValue: testDate,
+          currentValue: testIso,
           previousValue: null,
           firstChange: true,
           isFirstChange: () => true,
@@ -53,10 +54,11 @@ describe('NgDatetimePicker', () => {
     });
 
     it('should reset date and time when value is set to null', () => {
-      component.value = new Date(2024, 5, 15, 14, 30);
+      const testIso = new Date(2024, 5, 15, 14, 30).toISOString();
+      component.value = testIso;
       component.ngOnChanges({
         value: {
-          currentValue: new Date(2024, 5, 15, 14, 30),
+          currentValue: testIso,
           previousValue: null,
           firstChange: true,
           isFirstChange: () => true,
@@ -67,7 +69,7 @@ describe('NgDatetimePicker', () => {
       component.ngOnChanges({
         value: {
           currentValue: null,
-          previousValue: new Date(2024, 5, 15, 14, 30),
+          previousValue: testIso,
           firstChange: false,
           isFirstChange: () => false,
         },
@@ -109,7 +111,7 @@ describe('NgDatetimePicker', () => {
       component.onDateChange({ value: newDate });
 
       expect(component.date).toEqual(newDate);
-      expect(spy).toHaveBeenCalledWith(new Date(2024, 3, 10, 9, 45, 0));
+      expect(spy).toHaveBeenCalledWith(new Date(2024, 3, 10, 9, 45, 0).toISOString());
     });
 
     it('should emit null when date is cleared', () => {
@@ -130,7 +132,7 @@ describe('NgDatetimePicker', () => {
       component.onHourChange(18);
 
       expect(component.hour).toBe(18);
-      expect(spy).toHaveBeenCalledWith(new Date(2024, 6, 20, 18, 15, 0));
+      expect(spy).toHaveBeenCalledWith(new Date(2024, 6, 20, 18, 15, 0).toISOString());
     });
 
     it('should clamp hour to max 23', () => {
@@ -162,7 +164,7 @@ describe('NgDatetimePicker', () => {
       component.onMinuteChange(55);
 
       expect(component.minute).toBe(55);
-      expect(spy).toHaveBeenCalledWith(new Date(2024, 11, 25, 8, 55, 0));
+      expect(spy).toHaveBeenCalledWith(new Date(2024, 11, 25, 8, 55, 0).toISOString());
     });
 
     it('should clamp minute to max 59', () => {
@@ -195,7 +197,7 @@ describe('NgDatetimePicker', () => {
       component.onSecondChange(45);
 
       expect(component.second).toBe(45);
-      expect(spy).toHaveBeenCalledWith(new Date(2024, 11, 25, 8, 30, 45));
+      expect(spy).toHaveBeenCalledWith(new Date(2024, 11, 25, 8, 30, 45).toISOString());
     });
 
     it('should clamp second to max 59', () => {
@@ -218,6 +220,46 @@ describe('NgDatetimePicker', () => {
     });
   });
 
+  describe('ISO string format', () => {
+    it('should emit a string ending with Z (UTC ISO 8601 format)', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit');
+      component.date = new Date(2024, 0, 15);
+      component.hour = 14;
+      component.minute = 30;
+      component.second = 0;
+      component.onSecondChange(0);
+
+      const emitted = spy.mock.calls[0][0] as string;
+      expect(emitted).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+    });
+
+    it('should correctly parse an ISO string input and populate date/time fields', () => {
+      const iso = '2024-07-20T10:25:45.000Z';
+      component.value = iso;
+      component.ngOnChanges({
+        value: {
+          currentValue: iso,
+          previousValue: null,
+          firstChange: true,
+          isFirstChange: () => true,
+        },
+      });
+
+      const parsed = new Date(iso);
+      expect(component.date).toEqual(new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate()));
+      expect(component.hour).toBe(parsed.getHours());
+      expect(component.minute).toBe(parsed.getMinutes());
+      expect(component.second).toBe(parsed.getSeconds());
+    });
+
+    it('should emit null when value is null', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit');
+      component.date = null;
+      component.onHourChange(5);
+      expect(spy).toHaveBeenCalledWith(null);
+    });
+  });
+
   describe('template rendering', () => {
     it('should render date input with matDatepicker', () => {
       const el = fixture.nativeElement as HTMLElement;
@@ -234,6 +276,15 @@ describe('NgDatetimePicker', () => {
     it('should render mat-datepicker-toggle', () => {
       const el = fixture.nativeElement as HTMLElement;
       expect(el.querySelector('mat-datepicker-toggle')).toBeTruthy();
+    });
+
+    it('should render all form fields with outline appearance', () => {
+      const el = fixture.nativeElement as HTMLElement;
+      const formFields = el.querySelectorAll('mat-form-field');
+      expect(formFields.length).toBe(4);
+      formFields.forEach((field) => {
+        expect(field.classList.contains('mat-form-field-appearance-outline')).toBe(true);
+      });
     });
   });
 });
