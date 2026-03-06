@@ -168,4 +168,71 @@ test.describe('Compact DateTime Picker', () => {
 
     expect(compactHeight).toBeLessThan(standardHeight);
   });
+
+  test('should have time fields narrower than the date field in compact mode', async ({ page }) => {
+    const compactPicker = page.locator('.qb-datetime-picker--compact');
+    const formFields = compactPicker.locator('mat-form-field');
+    const dateFieldBox = await formFields.nth(0).boundingBox();
+    expect(dateFieldBox).not.toBeNull();
+
+    for (let i = 1; i <= 4; i++) {
+      const timeFieldBox = await formFields.nth(i).boundingBox();
+      expect(timeFieldBox).not.toBeNull();
+      expect(
+        timeFieldBox!.width,
+        `Time field ${i} (${timeFieldBox!.width}px) should be narrower than Date field (${dateFieldBox!.width}px)`
+      ).toBeLessThan(dateFieldBox!.width);
+    }
+  });
+
+  test('should have time fields at roughly half the width of the date field', async ({ page }) => {
+    const compactPicker = page.locator('.qb-datetime-picker--compact');
+    const formFields = compactPicker.locator('mat-form-field');
+    const dateFieldWidth = (await formFields.nth(0).boundingBox())!.width;
+
+    for (let i = 1; i <= 4; i++) {
+      const timeFieldWidth = (await formFields.nth(i).boundingBox())!.width;
+      const ratio = timeFieldWidth / dateFieldWidth;
+      // Time fields should be no more than 75% the width of the Date field
+      expect(
+        ratio,
+        `Time field ${i} ratio ${ratio.toFixed(2)} should be <= 0.75`
+      ).toBeLessThanOrEqual(0.75);
+    }
+  });
+
+  test('should have all four time fields at a consistent width in compact mode', async ({ page }) => {
+    const compactPicker = page.locator('.qb-datetime-picker--compact');
+    const formFields = compactPicker.locator('mat-form-field');
+
+    const timeWidths: number[] = [];
+    for (let i = 1; i <= 4; i++) {
+      const box = await formFields.nth(i).boundingBox();
+      expect(box).not.toBeNull();
+      timeWidths.push(Math.round(box!.width));
+    }
+
+    // All time fields should be the same width (within 1px tolerance)
+    const first = timeWidths[0];
+    for (let i = 1; i < timeWidths.length; i++) {
+      expect(
+        Math.abs(timeWidths[i] - first),
+        `Time field ${i + 1} width (${timeWidths[i]}px) should match first time field (${first}px)`
+      ).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('should have time fields narrower than the date field in standard mode too', async ({ page }) => {
+    const standardPicker = page.locator('.qb-datetime-picker:not(.qb-datetime-picker--compact)');
+    const formFields = standardPicker.locator('mat-form-field');
+    const dateFieldWidth = (await formFields.nth(0).boundingBox())!.width;
+
+    for (let i = 1; i <= 4; i++) {
+      const timeFieldWidth = (await formFields.nth(i).boundingBox())!.width;
+      expect(
+        timeFieldWidth,
+        `Standard time field ${i} (${timeFieldWidth}px) should be narrower than Date field (${dateFieldWidth}px)`
+      ).toBeLessThan(dateFieldWidth);
+    }
+  });
 });

@@ -6,23 +6,23 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Hour</mat-label>
+  <mat-form-field appearance="outline" class="qb-datetime-picker__time-field">
+    <mat-label>Hr</mat-label>
     <input matInput type="number" [ngModel]="hour" (ngModelChange)="onHourChange($event)" min="0" max="23" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Minute</mat-label>
+  <mat-form-field appearance="outline" class="qb-datetime-picker__time-field">
+    <mat-label>Min</mat-label>
     <input matInput type="number" [ngModel]="minute" (ngModelChange)="onMinuteChange($event)" min="0" max="59" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Second</mat-label>
+  <mat-form-field appearance="outline" class="qb-datetime-picker__time-field">
+    <mat-label>Sec</mat-label>
     <input matInput type="number" [ngModel]="second" (ngModelChange)="onSecondChange($event)" min="0" max="59" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Millisecond</mat-label>
+  <mat-form-field appearance="outline" class="qb-datetime-picker__time-field">
+    <mat-label>Ms</mat-label>
     <input matInput type="number" [ngModel]="millisecond" (ngModelChange)="onMillisecondChange($event)" min="0" max="999" />
   </mat-form-field>
 </div>
